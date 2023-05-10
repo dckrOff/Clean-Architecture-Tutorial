@@ -7,15 +7,17 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.test.cleanarchitecturetutorial.R
+import com.test.cleanarchitecturetutorial.data.repository.UserRepositoryImpl
 import com.test.cleanarchitecturetutorial.domain.model.SaveUserNameParam
 import com.test.cleanarchitecturetutorial.domain.usecase.GetUserNameUseCase
 import com.test.cleanarchitecturetutorial.domain.usecase.SaveUserNameUseCase
 
 class MainActivity : AppCompatActivity() {
-    private val getUserNameUseCase = GetUserNameUseCase()
-    private val saveUserNameUseCase = SaveUserNameUseCase()
 
-    @SuppressLint("SetTextI18n")
+    private val userRepository by lazy { UserRepositoryImpl(context = applicationContext) }
+    private val getUserNameUseCase by lazy { GetUserNameUseCase(userRepository = userRepository) }
+    private val saveUserNameUseCase by lazy { SaveUserNameUseCase(userRepository = userRepository) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnGetData.setOnClickListener {
-            tvText.text = "Get data result: ${getUserNameUseCase.execute().firstName}"
+            tvText.text = "${getUserNameUseCase.execute().firstName}"
         }
     }
 }
