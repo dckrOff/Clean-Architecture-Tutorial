@@ -8,16 +8,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.test.cleanarchitecturetutorial.R
 import com.test.cleanarchitecturetutorial.data.repository.UserRepositoryImpl
+import com.test.cleanarchitecturetutorial.data.storage.UserStorage
 import com.test.cleanarchitecturetutorial.domain.model.SaveUserNameParam
 import com.test.cleanarchitecturetutorial.domain.usecase.GetUserNameUseCase
 import com.test.cleanarchitecturetutorial.domain.usecase.SaveUserNameUseCase
 
 class MainActivity : AppCompatActivity() {
 
-    private val userRepository by lazy { UserRepositoryImpl(context = applicationContext) }
+    private val userRepository by lazy { UserRepositoryImpl(userStorage = userStorage) }
     private val getUserNameUseCase by lazy { GetUserNameUseCase(userRepository = userRepository) }
     private val saveUserNameUseCase by lazy { SaveUserNameUseCase(userRepository = userRepository) }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,11 +32,10 @@ class MainActivity : AppCompatActivity() {
         btnSaveData.setOnClickListener {
             val userNameParam = SaveUserNameParam(name = etInput.text.toString())
             tvText.text = "Save data result: ${saveUserNameUseCase.execute(param = userNameParam)}"
-
         }
 
         btnGetData.setOnClickListener {
-            tvText.text = "${getUserNameUseCase.execute().firstName}"
+            tvText.text = getUserNameUseCase.execute().firstName
         }
     }
 }
