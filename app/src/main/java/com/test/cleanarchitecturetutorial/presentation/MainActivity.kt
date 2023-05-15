@@ -7,17 +7,27 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.test.cleanarchitecturetutorial.R
-import com.test.cleanarchitecturetutorial.data.repository.UserRepositoryImpl
-import com.test.cleanarchitecturetutorial.data.storage.UserStorage
 import com.test.cleanarchitecturetutorial.domain.model.SaveUserNameParam
 import com.test.cleanarchitecturetutorial.domain.usecase.GetUserNameUseCase
 import com.test.cleanarchitecturetutorial.domain.usecase.SaveUserNameUseCase
+import com.test.data.cleanarchitecturetutorial.data.repository.UserRepositoryImpl
+import com.test.data.cleanarchitecturetutorial.data.storage.sharedprefs.SharedPrefsUserStorage
 
 class MainActivity : AppCompatActivity() {
 
-    private val userRepository by lazy { UserRepositoryImpl(userStorage = userStorage) }
-    private val getUserNameUseCase by lazy { GetUserNameUseCase(userRepository = userRepository) }
-    private val saveUserNameUseCase by lazy { SaveUserNameUseCase(userRepository = userRepository) }
+    private val userRepository by lazy(LazyThreadSafetyMode.NONE) {
+        UserRepositoryImpl(userStorage = SharedPrefsUserStorage(context = applicationContext))
+    }
+    private val getUserNameUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        GetUserNameUseCase(
+            userRepository = userRepository
+        )
+    }
+    private val saveUserNameUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        SaveUserNameUseCase(
+            userRepository = userRepository
+        )
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {

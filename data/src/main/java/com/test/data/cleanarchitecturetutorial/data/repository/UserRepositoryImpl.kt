@@ -1,7 +1,7 @@
-package com.test.cleanarchitecturetutorial.data.repository
+package com.test.data.cleanarchitecturetutorial.data.repository
 
-import com.test.cleanarchitecturetutorial.data.storage.UserStorage
-import com.test.cleanarchitecturetutorial.data.storage.models.User
+import com.test.data.cleanarchitecturetutorial.data.storage.UserStorage
+import com.test.data.cleanarchitecturetutorial.data.storage.models.User
 import com.test.cleanarchitecturetutorial.domain.model.SaveUserNameParam
 import com.test.cleanarchitecturetutorial.domain.model.UserName
 import com.test.cleanarchitecturetutorial.domain.repository.UserRepository

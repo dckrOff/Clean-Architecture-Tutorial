@@ -1,8 +1,8 @@
-package com.test.cleanarchitecturetutorial.data.storage.sharedprefs
+package com.test.data.cleanarchitecturetutorial.data.storage.sharedprefs
 
 import android.content.Context
-import com.test.cleanarchitecturetutorial.data.storage.UserStorage
-import com.test.cleanarchitecturetutorial.data.storage.models.User
+import com.test.data.cleanarchitecturetutorial.data.storage.UserStorage
+import com.test.data.cleanarchitecturetutorial.data.storage.models.User
 
 private const val SHARED_PREFS_NAME = "shared_prefs_name"
 private const val KEY_FIRST_NAME = "firstName"
